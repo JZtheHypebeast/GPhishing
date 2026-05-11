@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+
+# Local environment files
+.env
+.env.*
+
+# Editor and dependency folders
+.vscode/
+.idea/
+node_modules/
+vendor/
