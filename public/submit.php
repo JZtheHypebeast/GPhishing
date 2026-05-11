@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require dirname(__DIR__) . '/app/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -20,7 +22,7 @@ $passwordLength = strlen($password);
 unset($password);
 
 try {
-    $statement = db()->prepare(
+    $statement = app_db()->prepare(
         'INSERT INTO simulation_submissions
             (
                 identifier,

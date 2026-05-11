@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 function app_config(): array
 {
     $localConfigPath = dirname(__DIR__) . '/config/local.php';
@@ -20,7 +22,7 @@ function app_config(): array
     ], is_array($localConfig) ? $localConfig : []);
 }
 
-function db(): PDO
+function app_db(): PDO
 {
     static $pdo = null;
 
@@ -49,6 +51,11 @@ function db(): PDO
     ]);
 
     return $pdo;
+}
+
+function db(): PDO
+{
+    return app_db();
 }
 
 function hashed_client_ip(): ?string

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 $trackingFields = ['campaign_id', 'participant_id', 'landing_id', 'source'];
 $tracking = [];
 

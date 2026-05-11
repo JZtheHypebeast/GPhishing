@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 $identifier = isset($_GET['identifier']) ? trim((string) $_GET['identifier']) : '';
 $trackingFields = ['campaign_id', 'participant_id', 'landing_id', 'source'];
 $tracking = [];
