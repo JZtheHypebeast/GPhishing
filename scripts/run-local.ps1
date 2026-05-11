@@ -37,4 +37,4 @@ if (-not $PhpClient) {
 Set-Location $RootDir
 
 Write-Host "Starting PHP server at http://${HostName}:$Port/index.php"
-& $PhpClient -S "${HostName}:$Port"
+& $PhpClient -S "${HostName}:$Port" -t public

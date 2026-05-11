@@ -60,10 +60,20 @@ The setup scripts will:
 - start MariaDB
 - create the `simulation_training` database
 - create the `simulation_user` database user
-- create the `simulation_submissions` table from `schema.sql`
-- generate `config.local.php`
+- create the `simulation_submissions` table from `database/schema.sql`
+- generate `config/local.php`
 
-`config.local.php` is ignored by Git because it contains local database credentials.
+`config/local.php` is ignored by Git because it contains local database credentials.
+
+## Project Structure
+
+```text
+app/        PHP application helpers
+config/     Local and sample configuration
+database/   SQL schema
+public/     Web document root
+scripts/    macOS and Windows setup/run scripts
+```
 
 ## Manual Setup
 
@@ -78,16 +88,16 @@ Create the database and table:
 
 ```bash
 mariadb -u "$(whoami)" -e "CREATE DATABASE IF NOT EXISTS simulation_training CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-mariadb -u "$(whoami)" simulation_training < schema.sql
+mariadb -u "$(whoami)" simulation_training < database/schema.sql
 ```
 
-Create `config.local.php`:
+Create `config/local.php`:
 
 ```bash
-cp config.sample.php config.local.php
+cp config/sample.php config/local.php
 ```
 
-Then edit `config.local.php` to match your local MariaDB user and password.
+Then edit `config/local.php` to match your local MariaDB user and password.
 
 ## Run
 

@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/database.php';
+require dirname(__DIR__) . '/app/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php', true, 303);

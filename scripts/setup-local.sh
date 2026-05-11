@@ -7,7 +7,8 @@ DB_USER="${DB_USER:-simulation_user}"
 DB_HOST="${DB_HOST:-127.0.0.1}"
 DB_PORT="${DB_PORT:-3306}"
 DB_ADMIN_USER="${DB_ADMIN_USER:-$(whoami)}"
-CONFIG_FILE="$ROOT_DIR/config.local.php"
+CONFIG_FILE="$ROOT_DIR/config/local.php"
+SCHEMA_FILE="$ROOT_DIR/database/schema.sql"
 
 need_command() {
     local command_name="$1"
@@ -82,7 +83,7 @@ FLUSH PRIVILEGES;
 "
 
 echo "Creating tables..."
-mariadb -u "$DB_ADMIN_USER" "$DB_NAME" < "$ROOT_DIR/schema.sql"
+mariadb -u "$DB_ADMIN_USER" "$DB_NAME" < "$SCHEMA_FILE"
 
 cat > "$CONFIG_FILE" <<PHP
 <?php

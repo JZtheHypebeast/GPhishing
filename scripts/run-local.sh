@@ -8,4 +8,4 @@ PORT="${PORT:-8000}"
 cd "$ROOT_DIR"
 
 echo "Starting PHP server at http://$HOST:$PORT/index.php"
-php -S "$HOST:$PORT"
+php -S "$HOST:$PORT" -t public

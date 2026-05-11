@@ -11,8 +11,8 @@ param(
 $ErrorActionPreference = "Stop"
 
 $RootDir = Split-Path -Parent $PSScriptRoot
-$ConfigFile = Join-Path $RootDir "config.local.php"
-$SchemaFile = Join-Path $RootDir "schema.sql"
+$ConfigFile = Join-Path $RootDir "config\local.php"
+$SchemaFile = Join-Path $RootDir "database\schema.sql"
 
 function Test-Command {
     param([string]$Name)

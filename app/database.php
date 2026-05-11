@@ -2,7 +2,7 @@
 
 function app_config(): array
 {
-    $localConfigPath = __DIR__ . '/config.local.php';
+    $localConfigPath = dirname(__DIR__) . '/config/local.php';
     $localConfig = is_file($localConfigPath) ? require $localConfigPath : [];
 
     return array_replace_recursive([
