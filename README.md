@@ -2,6 +2,26 @@
 
 Local PHP/MariaDB training simulation.
 
+## Requirements
+
+Required:
+
+```text
+PHP 8.1 or newer
+MariaDB 10.3 or newer
+PHP PDO MySQL extension
+Git
+```
+
+Tested locally with:
+
+```text
+PHP 8.5.6
+MariaDB 12.2.2
+```
+
+macOS setup expects Homebrew. Windows setup expects PowerShell and uses `winget` when PHP or MariaDB are missing.
+
 ## 1. Clone The Repository
 
 ```bash
