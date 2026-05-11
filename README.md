@@ -135,6 +135,7 @@ The app inserts rows into `simulation_submissions` with:
 - submitted password flag
 - password length
 - show-password checkbox usage
+- browser agent
 - timestamp
 
 The submitted password value is intentionally discarded.

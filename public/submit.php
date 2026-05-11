@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $identifier = trim((string) ($_POST['identifier'] ?? ''));
 $password = (string) ($_POST[PASSWORD_FIELD_NAME] ?? '');
 $passwordRevealed = isset($_POST[PASSWORD_REVEALED_FIELD_NAME]) && $_POST[PASSWORD_REVEALED_FIELD_NAME] === '1';
+$browserAgent = substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 512);
 
 $submittedPassword = $password !== '';
 $passwordLength = strlen($password);
@@ -25,14 +26,16 @@ try {
                 identifier,
                 submitted_password,
                 password_length,
-                password_revealed
+                password_revealed,
+                browser_agent
             )
          VALUES
             (
                 :identifier,
                 :submitted_password,
                 :password_length,
-                :password_revealed
+                :password_revealed,
+                :browser_agent
             )'
     );
 
@@ -41,6 +44,7 @@ try {
         ':submitted_password' => $submittedPassword ? 1 : 0,
         ':password_length' => $passwordLength,
         ':password_revealed' => $passwordRevealed ? 1 : 0,
+        ':browser_agent' => $browserAgent !== '' ? $browserAgent : null,
     ]);
 
     $saved = true;
