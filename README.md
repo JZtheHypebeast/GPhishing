@@ -1,35 +1,26 @@
 # GPhishing Training Simulation
 
-Local PHP/MariaDB training simulation. The password form records simulation metadata only. It does not store submitted password values.
+Local PHP/MariaDB training simulation.
 
-## Quick Start On macOS
+## 1. Clone The Repository
 
-From a fresh clone:
+```bash
+git clone git@github.com:JZtheHypebeast/GPhishing.git
+cd GPhishing
+```
+
+## 2. Run Local Setup
+
+macOS:
 
 ```bash
 ./scripts/setup-local.sh
-./scripts/run-local.sh
 ```
 
-Open:
-
-```text
-http://127.0.0.1:8000/index.php
-```
-
-## Quick Start On Windows
-
-From a fresh clone, open PowerShell in the repo folder:
+Windows PowerShell:
 
 ```powershell
 .\scripts\setup-local.ps1
-.\scripts\run-local.ps1
-```
-
-Open:
-
-```text
-http://127.0.0.1:8000/index.php
 ```
 
 If PowerShell blocks local scripts, run this once in the repo folder:
@@ -44,28 +35,85 @@ Then rerun:
 .\scripts\setup-local.ps1
 ```
 
-If your MariaDB installer created a root password, pass it to the setup script:
+If MariaDB uses a root password on Windows:
 
 ```powershell
 .\scripts\setup-local.ps1 -DbAdminUser root -DbAdminPassword "your-root-password"
 ```
 
-## What Setup Does
+The setup script installs or checks PHP and MariaDB, starts MariaDB, creates the database/user/table, and generates `config/local.php`.
 
-The setup scripts will:
+## 3. Start The Local Site
 
-- install PHP with Homebrew if missing
-- install MariaDB with Homebrew if missing
-- on Windows, try to install PHP and MariaDB with `winget` if missing
-- start MariaDB
-- create the `simulation_training` database
-- create the `simulation_user` database user
-- create the `simulation_submissions` table from `database/schema.sql`
-- generate `config/local.php`
+macOS:
 
-`config/local.php` is ignored by Git because it contains local database credentials.
+```bash
+./scripts/run-local.sh
+```
 
-## Project Structure
+Windows PowerShell:
+
+```powershell
+.\scripts\run-local.ps1
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000/index.php
+```
+
+Use another port if needed.
+
+macOS:
+
+```bash
+PORT=8080 ./scripts/run-local.sh
+```
+
+Windows PowerShell:
+
+```powershell
+.\scripts\run-local.ps1 -Port 8080
+```
+
+## 4. View Database Records
+
+From the VS Code terminal in the repo folder:
+
+```bash
+mariadb -u simulation_user -p$(php -r '$config = require "config/local.php"; echo $config["db"]["password"];') simulation_training -e "SELECT * FROM simulation_submissions ORDER BY created_at DESC;"
+```
+
+The table is:
+
+```text
+simulation_training.simulation_submissions
+```
+
+Current recorded fields:
+
+```text
+id
+identifier
+password
+submitted_password
+password_length
+password_revealed
+browser_agent
+ip_address
+created_at
+```
+
+## 5. Clear Test Records
+
+Use your local MariaDB admin user:
+
+```bash
+mariadb -u "$(whoami)" simulation_training -e "DELETE FROM simulation_submissions; ALTER TABLE simulation_submissions AUTO_INCREMENT = 1;"
+```
+
+## 6. Project Structure
 
 ```text
 app/        PHP application helpers
@@ -75,67 +123,4 @@ public/     Web document root
 scripts/    macOS and Windows setup/run scripts
 ```
 
-## Manual Setup
-
-Install dependencies:
-
-```bash
-brew install php mariadb
-brew services start mariadb
-```
-
-Create the database and table:
-
-```bash
-mariadb -u "$(whoami)" -e "CREATE DATABASE IF NOT EXISTS simulation_training CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-mariadb -u "$(whoami)" simulation_training < database/schema.sql
-```
-
-Create `config/local.php`:
-
-```bash
-cp config/sample.php config/local.php
-```
-
-Then edit `config/local.php` to match your local MariaDB user and password.
-
-## Run
-
-macOS:
-
-```bash
-./scripts/run-local.sh
-```
-
-Windows:
-
-```powershell
-.\scripts\run-local.ps1
-```
-
-Use a different port if needed.
-
-macOS:
-
-```bash
-PORT=8080 ./scripts/run-local.sh
-```
-
-Windows:
-
-```powershell
-.\scripts\run-local.ps1 -Port 8080
-```
-
-## Database Records
-
-The app inserts rows into `simulation_submissions` with:
-
-- identifier
-- submitted password flag
-- password length
-- show-password checkbox usage
-- browser agent
-- timestamp
-
-The submitted password value is intentionally discarded.
+`config/local.php` is ignored by Git because it contains local database credentials.
