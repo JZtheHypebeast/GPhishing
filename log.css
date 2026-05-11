@@ -157,6 +157,14 @@ h1 {
     opacity: 1;
 }
 
+.result-note {
+    max-width: 420px;
+    margin: 0;
+    color: var(--soft);
+    font-size: 18px;
+    line-height: 1.5;
+}
+
 .show-password {
     position: relative;
     display: inline-flex;

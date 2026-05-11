@@ -4,6 +4,7 @@ Thumbs.db
 # Local environment files
 .env
 .env.*
+config.local.php
 
 # Editor and dependency folders
 .vscode/
