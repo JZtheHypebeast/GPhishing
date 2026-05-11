@@ -6,7 +6,7 @@ return [
     'db' => [
         'host' => '127.0.0.1',
         'port' => 3306,
-        'name' => 'simulation_training',
+        'name' => 'Cello_Zorg',
         'user' => 'simulation_user',
         'password' => 'change-me',
         'charset' => 'utf8mb4',

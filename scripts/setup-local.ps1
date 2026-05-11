@@ -1,5 +1,5 @@
 param(
-    [string]$DbName = "simulation_training",
+    [string]$DbName = "Cello_Zorg",
     [string]$DbUser = "simulation_user",
     [string]$DbHost = "127.0.0.1",
     [int]$DbPort = 3306,

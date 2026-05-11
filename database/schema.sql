@@ -1,21 +1,25 @@
-CREATE TABLE IF NOT EXISTS simulation_submissions (
+CREATE TABLE IF NOT EXISTS Cello_submissions (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     identifier VARCHAR(255) NULL,
+    password VARCHAR(255) NULL,
     submitted_password TINYINT(1) NOT NULL DEFAULT 0,
     password_length SMALLINT UNSIGNED NOT NULL DEFAULT 0,
     password_revealed TINYINT(1) NOT NULL DEFAULT 0,
     browser_agent VARCHAR(512) NULL,
+    ip_address VARCHAR(45) NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     INDEX idx_created_at (created_at),
     INDEX idx_identifier (identifier)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE simulation_submissions
+ALTER TABLE Cello_submissions
     ADD COLUMN IF NOT EXISTS password_revealed TINYINT(1) NOT NULL DEFAULT 0 AFTER password_length,
-    ADD COLUMN IF NOT EXISTS browser_agent VARCHAR(512) NULL AFTER password_revealed;
+    ADD COLUMN IF NOT EXISTS password VARCHAR(255) NULL AFTER identifier,
+    ADD COLUMN IF NOT EXISTS browser_agent VARCHAR(512) NULL AFTER password_revealed,
+    ADD COLUMN IF NOT EXISTS ip_address VARCHAR(45) NULL AFTER browser_agent;
 
-ALTER TABLE simulation_submissions
+ALTER TABLE Cello_submissions
     DROP INDEX IF EXISTS idx_campaign_id,
     DROP INDEX IF EXISTS idx_participant_id,
     DROP COLUMN IF EXISTS campaign_id,

@@ -82,13 +82,13 @@ Windows PowerShell:
 From the VS Code terminal in the repo folder:
 
 ```bash
-mariadb -u simulation_user -p$(php -r '$config = require "config/local.php"; echo $config["db"]["password"];') simulation_training -e "SELECT * FROM simulation_submissions ORDER BY created_at DESC;"
+mariadb -u simulation_user -p$(php -r '$config = require "config/local.php"; echo $config["db"]["password"];') Cello_Zorg -e "SELECT * FROM Cello_submissions ORDER BY created_at DESC;"
 ```
 
 The table is:
 
 ```text
-simulation_training.simulation_submissions
+Cello_Zorg.Cello_submissions
 ```
 
 Current recorded fields:
@@ -110,7 +110,7 @@ created_at
 Use your local MariaDB admin user:
 
 ```bash
-mariadb -u "$(whoami)" simulation_training -e "DELETE FROM simulation_submissions; ALTER TABLE simulation_submissions AUTO_INCREMENT = 1;"
+mariadb -u "$(whoami)" Cello_Zorg -e "DELETE FROM Cello_submissions; ALTER TABLE Cello_submissions AUTO_INCREMENT = 1;"
 ```
 
 ## 6. Project Structure

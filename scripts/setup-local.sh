@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DB_NAME="${DB_NAME:-simulation_training}"
+DB_NAME="${DB_NAME:-Cello_Zorg}"
 DB_USER="${DB_USER:-simulation_user}"
 DB_HOST="${DB_HOST:-127.0.0.1}"
 DB_PORT="${DB_PORT:-3306}"
