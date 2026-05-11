@@ -17,12 +17,6 @@ Open:
 http://127.0.0.1:8000/index.php
 ```
 
-Optional tracking variables can be passed in the URL:
-
-```text
-http://127.0.0.1:8000/index.php?campaign_id=spring-test&participant_id=user-123&landing_id=forms-page&source=email
-```
-
 ## Quick Start On Windows
 
 From a fresh clone, open PowerShell in the repo folder:
@@ -138,15 +132,9 @@ Windows:
 The app inserts rows into `simulation_submissions` with:
 
 - identifier
-- campaign ID
-- participant ID
-- landing ID
-- source
 - submitted password flag
 - password length
 - show-password checkbox usage
-- hashed IP address
-- user agent
 - timestamp
 
 The submitted password value is intentionally discarded.

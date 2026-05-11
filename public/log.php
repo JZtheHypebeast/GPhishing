@@ -4,11 +4,6 @@ declare(strict_types=1);
 require dirname(__DIR__) . '/app/form-fields.php';
 
 $identifier = isset($_GET['identifier']) ? trim((string) $_GET['identifier']) : '';
-$tracking = [];
-
-foreach (TRACKING_FIELD_NAMES as $field) {
-    $tracking[$field] = isset($_GET[$field]) ? trim((string) $_GET[$field]) : '';
-}
 ?>
 <!doctype html>
 <html lang="en">
@@ -44,9 +39,6 @@ foreach (TRACKING_FIELD_NAMES as $field) {
 
             <form class="password-side" action="submit.php" method="post">
                 <input type="hidden" name="identifier" value="<?php echo htmlspecialchars($identifier, ENT_QUOTES, 'UTF-8'); ?>">
-                <?php foreach ($tracking as $field => $value): ?>
-                    <input type="hidden" name="<?php echo htmlspecialchars($field, ENT_QUOTES, 'UTF-8'); ?>" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
-                <?php endforeach; ?>
 
                 <label class="password-input">
                     <span class="sr-only">Password</span>
