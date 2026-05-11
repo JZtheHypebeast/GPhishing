@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require dirname(__DIR__) . '/app/database.php';
+require dirname(__DIR__) . '/app/form-fields.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php', true, 303);
@@ -10,12 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $identifier = trim((string) ($_POST['identifier'] ?? ''));
-$password = (string) ($_POST['password'] ?? '');
+$password = (string) ($_POST[PASSWORD_FIELD_NAME] ?? '');
 $campaignId = trim((string) ($_POST['campaign_id'] ?? ''));
 $participantId = trim((string) ($_POST['participant_id'] ?? ''));
 $landingId = trim((string) ($_POST['landing_id'] ?? ''));
 $source = trim((string) ($_POST['source'] ?? ''));
-$passwordRevealed = isset($_POST['password_revealed']) && $_POST['password_revealed'] === '1';
+$passwordRevealed = isset($_POST[PASSWORD_REVEALED_FIELD_NAME]) && $_POST[PASSWORD_REVEALED_FIELD_NAME] === '1';
 
 $submittedPassword = $password !== '';
 $passwordLength = strlen($password);

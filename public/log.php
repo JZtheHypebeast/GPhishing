@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
+require dirname(__DIR__) . '/app/form-fields.php';
+
 $identifier = isset($_GET['identifier']) ? trim((string) $_GET['identifier']) : '';
-$trackingFields = ['campaign_id', 'participant_id', 'landing_id', 'source'];
 $tracking = [];
 
-foreach ($trackingFields as $field) {
+foreach (TRACKING_FIELD_NAMES as $field) {
     $tracking[$field] = isset($_GET[$field]) ? trim((string) $_GET[$field]) : '';
 }
 ?>
@@ -49,11 +50,11 @@ foreach ($trackingFields as $field) {
 
                 <label class="password-input">
                     <span class="sr-only">Password</span>
-                    <input type="password" name="password" placeholder="Enter your password" autocomplete="off">
+                    <input type="password" name="<?php echo htmlspecialchars(PASSWORD_FIELD_NAME, ENT_QUOTES, 'UTF-8'); ?>" placeholder="Enter your password" autocomplete="off">
                 </label>
 
                 <label class="show-password">
-                    <input type="checkbox" name="password_revealed" value="1">
+                    <input type="checkbox" name="<?php echo htmlspecialchars(PASSWORD_REVEALED_FIELD_NAME, ENT_QUOTES, 'UTF-8'); ?>" value="1">
                     <span class="checkbox" aria-hidden="true"></span>
                     <span>Show password</span>
                 </label>

@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-$trackingFields = ['campaign_id', 'participant_id', 'landing_id', 'source'];
+require dirname(__DIR__) . '/app/form-fields.php';
+
 $tracking = [];
 
-foreach ($trackingFields as $field) {
+foreach (TRACKING_FIELD_NAMES as $field) {
     $tracking[$field] = isset($_GET[$field]) ? trim((string) $_GET[$field]) : '';
 }
 ?>
