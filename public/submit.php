@@ -9,22 +9,55 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $identifier = trim((string) ($_POST['identifier'] ?? ''));
 $password = (string) ($_POST['password'] ?? '');
+$campaignId = trim((string) ($_POST['campaign_id'] ?? ''));
+$participantId = trim((string) ($_POST['participant_id'] ?? ''));
+$landingId = trim((string) ($_POST['landing_id'] ?? ''));
+$source = trim((string) ($_POST['source'] ?? ''));
+$passwordRevealed = isset($_POST['password_revealed']) && $_POST['password_revealed'] === '1';
 
 $submittedPassword = $password !== '';
 $passwordLength = strlen($password);
+unset($password);
 
 try {
     $statement = db()->prepare(
         'INSERT INTO simulation_submissions
-            (identifier, submitted_password, password_length, ip_hash, user_agent)
+            (
+                identifier,
+                campaign_id,
+                participant_id,
+                landing_id,
+                source,
+                submitted_password,
+                password_length,
+                password_revealed,
+                ip_hash,
+                user_agent
+            )
          VALUES
-            (:identifier, :submitted_password, :password_length, :ip_hash, :user_agent)'
+            (
+                :identifier,
+                :campaign_id,
+                :participant_id,
+                :landing_id,
+                :source,
+                :submitted_password,
+                :password_length,
+                :password_revealed,
+                :ip_hash,
+                :user_agent
+            )'
     );
 
     $statement->execute([
         ':identifier' => $identifier !== '' ? $identifier : null,
+        ':campaign_id' => $campaignId !== '' ? $campaignId : null,
+        ':participant_id' => $participantId !== '' ? $participantId : null,
+        ':landing_id' => $landingId !== '' ? $landingId : null,
+        ':source' => $source !== '' ? $source : null,
         ':submitted_password' => $submittedPassword ? 1 : 0,
         ':password_length' => $passwordLength,
+        ':password_revealed' => $passwordRevealed ? 1 : 0,
         ':ip_hash' => hashed_client_ip(),
         ':user_agent' => substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 512),
     ]);

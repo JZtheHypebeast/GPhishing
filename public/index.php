@@ -1,3 +1,11 @@
+<?php
+$trackingFields = ['campaign_id', 'participant_id', 'landing_id', 'source'];
+$tracking = [];
+
+foreach ($trackingFields as $field) {
+    $tracking[$field] = isset($_GET[$field]) ? trim((string) $_GET[$field]) : '';
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,6 +33,10 @@
             </div>
 
             <form class="signin-form" action="log.php" method="get">
+                <?php foreach ($tracking as $field => $value): ?>
+                    <input type="hidden" name="<?php echo htmlspecialchars($field, ENT_QUOTES, 'UTF-8'); ?>" value="<?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); ?>">
+                <?php endforeach; ?>
+
                 <label class="field">
                     <span class="visually-hidden">Email or phone</span>
                     <input type="text" name="identifier" placeholder="Email or phone" autocomplete="off">
