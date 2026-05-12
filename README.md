@@ -99,7 +99,7 @@ Windows PowerShell:
 
 ## 4. View Database Records
 
-From the VS Code terminal in the repo folder:
+From the VS Code terminal in the repo folder, use the current database and table names:
 
 ```bash
 mariadb -u simulation_user -p$(php -r '$config = require "config/local.php"; echo $config["db"]["password"];') Cello_Zorg -e "SELECT * FROM Cello_submissions ORDER BY created_at DESC;"
