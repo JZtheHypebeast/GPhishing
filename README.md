@@ -1,4 +1,4 @@
-# GPhishing Training Simulation
+# GPhishing
 
 Local PHP/MariaDB training simulation.
 
