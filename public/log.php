@@ -70,5 +70,13 @@ $identifier = isset($_GET['identifier']) ? trim((string) $_GET['identifier']) : 
             </nav>
         </footer>
     </main>
+    <script>
+        const passwordInput = document.querySelector('.password-input input');
+        const showPasswordInput = document.querySelector('.show-password input');
+
+        showPasswordInput?.addEventListener('change', () => {
+            passwordInput.type = showPasswordInput.checked ? 'text' : 'password';
+        });
+    </script>
 </body>
 </html>

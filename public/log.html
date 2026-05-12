@@ -71,6 +71,13 @@
             emailText.textContent = email;
             accountPill.hidden = false;
         }
+
+        const passwordInput = document.querySelector('.password-input input');
+        const showPasswordInput = document.querySelector('.show-password input');
+
+        showPasswordInput?.addEventListener('change', () => {
+            passwordInput.type = showPasswordInput.checked ? 'text' : 'password';
+        });
     </script>
 </body>
 </html>
